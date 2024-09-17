@@ -1,0 +1,24 @@
+.OrbsLogo {
+    object-fit: contain;
+    display: inline;
+  }
+  .orbs_PoweredByOrbs {
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .orbs_PoweredByOrbs a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit; /* color: unset doesn't work in all browsers */
+  }
+  
+  .orbs_PoweredByOrbs .orbs_OrbsLogo {
+    margin-left: 6px;
+    margin-right: 6px;
+    width: 18px;
+    height: 18px;
+  }

@@ -1,0 +1,29 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .mainLogo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #ff3333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mainLogo svg {
+    width: 60%;
+    height: 60%;
+    color: white;
+  }
+  
+  .title {
+    font-size: 22px;
+    font-weight: 500;
+  }
+  

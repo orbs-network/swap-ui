@@ -1,0 +1,19 @@
+.orbs_SwapConfirmation {
+    /* Add your container styles here */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: var(--background-color); /* Example of dynamic background */
+  }
+
+  .orbs_SwapConfirmation *{
+
+    color: var(--text-color); /* Example of dynamic text color */
+  }
+
+  .orbs_SwapConfirmation .orbs_SwapStepLogo {
+    border: 7px solid  var(--background-color);
+    background: var(--background-color);
+  }

@@ -1,0 +1,13 @@
+@keyframes skeletonAnimation {
+    0% {
+      opacity: 0.2;
+    }
+    100% {
+      opacity: 0.4;
+    }
+  }
+  
+  .skeleton {
+    animation: skeletonAnimation 1s linear infinite alternate;
+    background-color: white;
+  }
