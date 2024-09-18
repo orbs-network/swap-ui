@@ -1,22 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 import path from "path";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   css: {
     modules: {
-      // The default naming pattern for CSS classes in modules is [name]__[local]___[hash]
-      // You can customize it if you want
-      generateScopedName: '[name]__[local]___[hash:base64:5]',
-
-      // Use camelCase for class names when importing in JavaScript
-      localsConvention: 'camelCase', // 'camelCaseOnly' if you want to enforce only camelCase.
-    }
+      generateScopedName: "[name]_[local]__[hash:base64:5]",
+    },
   },
   server: {
     port: 3003,
@@ -40,13 +36,12 @@ export default defineConfig({
         },
       },
     },
-
   },
-
   plugins: [
     svgr(),
     react(),
     tsconfigPaths(),
+    cssInjectedByJsPlugin(),
     dts({
       insertTypesEntry: true,
       outDir: "dist/types",

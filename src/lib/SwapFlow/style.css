@@ -1,0 +1,12 @@
+.orbs_SwapFlow {
+    /* Add your container styles here */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .orbs_SwapFlow * {
+    box-sizing: border-box;
+  }

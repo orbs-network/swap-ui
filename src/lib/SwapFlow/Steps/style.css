@@ -1,0 +1,107 @@
+.orbs_Steps {
+    margin-top: 20px;
+    padding-top: 20px;
+    position: relative;
+    border-top: 1px solid #433d53;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  
+  .orbs_StepsStep {
+    min-height: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .orbs_StepsStepLogo {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    background-color: #1f263d;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 7px solid #1f263d;
+    overflow: hidden;
+    
+  }
+
+  .orbs_StepsStepLogo svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+
+  
+  .orbs_StepsStepLogo * {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+    opacity: 0.5;
+    filter: grayscale(100%)!important;
+  }
+
+  .orbs_StepsStepLogoActive *  {
+    filter: unset!important;
+    opacity: 1;
+  }
+  
+  .orbs_StepsStepLeft {
+    opacity: 0.5;
+    font-size: 15px;
+  }
+  
+  .orbs_StepsStepLeftActive {
+    opacity: 1;
+  }
+  
+  .orbs_StepsStepLink {
+    color: #da88de;
+    opacity: 0.5;
+    text-decoration: none;
+  }
+  
+  .orbs_StepsStepLinkActive {
+    opacity: 1;
+  }
+  
+  .orbs_StepsStepTimer {
+    font-size: 15px;
+  }
+  
+  .orbs_StepsStepStatus {
+    margin-left: auto;
+  }
+  
+  .orbs_StepsStepStatus svg {
+    width: 23px;
+    height: 23px;
+  }
+  .orbs_SwapStepCheck {
+    margin-left: auto;
+  }
+  
+  .orbs_SwapStepLoader {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .orbs_StepsLine {
+    width: 2px;
+    height: calc(100% - 50px);
+    background-color: rgba(255,255,255, 0.2);
+    left: 20px;
+    position: absolute;
+    top: 35px;
+  }
+  

@@ -1,20 +1,14 @@
 
 import { ReactNode } from "react";
 
-
-export enum SwapStep {
-  WRAP = 1,
-  APPROVE = 2,
-  SWAP = 3,
-}
-
 export enum SwapStatus {
   LOADING = 1,
   SUCCESS = 2,
   FAILED = 3,
 }
 
-export interface Step {
+export interface SwapStep {
+  id: number,
   title: ReactNode;
   link?: { href: string; text: string };
   icon?: ReactNode;
@@ -25,15 +19,13 @@ export interface Step {
 }
 
 export interface SwapConfirmationArgs {
-  inUsd?: string;
-  outUsd?: string;
   inAmount?: string;
   outAmount?: string;
   inToken?: SwapConfirmationToken;
   outToken?: SwapConfirmationToken;
   swapStatus?: SwapStatus;
   txHash?: string;
-
+  isUnwrapFlow?: boolean;
 }
 
 export type SwapConfirmationToken = {symbol?: string, logo?: string}

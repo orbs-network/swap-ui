@@ -1,0 +1,36 @@
+.orbs_TradepPreview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .orbs_TradePreviewToken {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+   max-width: calc(50% - 30px);
+  }
+  
+  .orbs_TradePreviewToken p {
+    font-size: 14px;
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    overflow: hidden;    /* Hide any text that overflows beyond the container's width */
+    text-overflow: ellipsis; 
+    flex: 1;
+  }
+
+  .orbs_TradepPreviewIcon {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .orbs_TradepPreviewLogo {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  

@@ -1,0 +1,13 @@
+@keyframes orbs_skeletonAnimation {
+    0% {
+      opacity: 0.2;
+    }
+    100% {
+      opacity: 0.4;
+    }
+  }
+  
+  .orbs_SkeletonLoader {
+    animation: orbs_skeletonAnimation 1s linear infinite alternate;
+    background-color: white;
+  }

@@ -1,0 +1,37 @@
+.orbs_TradeStepLayout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.orbs_TradeStepLayoutBody {
+  gap: 20px;
+  align-items: center;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+}
+
+.orbs_TradeStepLayoutFooter {
+  font-size: 14px;
+  margin-top: 60px;
+}
+
+.orbs_TradeStepLayoutSuccessIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  fill: rgb(64, 182, 107);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.orbs_TradeStepLayoutErrorIcon {
+  width: 80px;
+  height: 80px;
+  fill: #f44336;
+}

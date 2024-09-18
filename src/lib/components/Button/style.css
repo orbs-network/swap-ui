@@ -1,0 +1,11 @@
+.orbs_Button {
+    font-size: 15px;
+    font-weight: 600;
+    min-height: 50px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s;
+    background: rgb(252, 114, 255);
+    color: white;
+}

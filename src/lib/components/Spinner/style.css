@@ -1,0 +1,19 @@
+.orbs_Spinner {
+    width: var(--size, 38px);
+    height: var(--size, 38px);
+    border: var(--border-width, 3px) solid var(--border-color, white);
+    border-bottom-color: var(--bottom-border-color, rgba(255, 255, 255, 0.2));
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: orbs_rotation 1s linear infinite;
+  }
+  
+  @keyframes orbs_rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

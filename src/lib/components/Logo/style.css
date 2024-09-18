@@ -1,0 +1,12 @@
+.orbs_Logo {
+    border-radius: 50%;
+    overflow: hidden; /* Fixed typo: "oveflow" should be "overflow" */
+  }
+  
+  .orbs_Logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    overflow: hidden; /* Fixed typo here too */
+  }
