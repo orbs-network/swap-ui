@@ -26,6 +26,10 @@ export interface SwapConfirmationArgs {
   swapStatus?: SwapStatus;
   txHash?: string;
   isUnwrapFlow?: boolean;
+  translation?: {
+    proceedInWallet?: string;
+    viewOnExplorer?: string;
+  }
 }
 
 export type SwapConfirmationToken = {symbol?: string, logo?: string}

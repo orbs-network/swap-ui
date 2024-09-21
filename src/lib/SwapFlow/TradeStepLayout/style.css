@@ -16,8 +16,20 @@
 }
 
 .orbs_TradeStepLayoutFooter {
-  font-size: 14px;
   margin-top: 60px;
+}
+.orbs_TradeStepLayoutFooter p {
+  font-size: 15px;
+}
+.orbs_TradeStepLayoutFooterHash{
+  color: inherit;
+  text-decoration: none;
+  font-size: 15px;
+
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  outline: none;
 }
 
 .orbs_TradeStepLayoutSuccessIcon {

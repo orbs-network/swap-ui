@@ -2,6 +2,7 @@ import { useSwapConfirmationContext } from "../context";
 import { SwapConfirmationToken } from "../../type";
 import { getClassName } from "@utils";
 import './style.css'
+import { Text } from "src/lib/components/Text/Text";
 
 function IconArrowRightShort() {
   return (
@@ -34,9 +35,9 @@ export const TradePreview = () => {
     return (
       <div className={getClassName('TradePreviewToken')}>
         <img src={token?.logo} className={getClassName('TradepPreviewLogo')} alt={`${token?.symbol} logo`} />
-        <p>
+        <Text>
           {amount} {token?.symbol}
-        </p>
+        </Text>
       </div>
     );
   };

@@ -1,6 +1,7 @@
 
 import { getClassName } from '@utils';
 import { FlexColumn } from 'src/lib/components/BaseStyles/BaseStyles';
+import { Text } from 'src/lib/components/Text/Text';
 import { SwapStep, SwapConfirmationToken } from 'src/lib/type';
 import { Logo } from '../../components/Logo/Logo';
 import { SkeletonLoader } from '../../components/SkeletonLoader/SkeletonLoader';
@@ -34,8 +35,8 @@ export const Review = ({
   currentStep?: number;
   fromTitle?: string;
   toTitle?: string;
-  inUsd?: string;
-  outUsd?: string;
+  inUsd?: string | number;
+  outUsd?: string  |number;
 }) => {
   const { swapStatus, outAmount, inAmount, inToken, outToken } =
     useSwapConfirmationContext();
@@ -94,7 +95,7 @@ const TokenDisplay = ({
 }: {
   amount?: string;
   token?: SwapConfirmationToken;
-  usd?: string;
+  usd?: string | number;
   title: string;
 }) => {
   if (!token) return null;
@@ -102,13 +103,13 @@ const TokenDisplay = ({
   return (
     <div className={`${getClassName("ReviewToken")}`}>
       <div className={`${getClassName("ReviewTokenLeft")}`}>
-        <p className={`${getClassName("ReviewTokenTitle")}`}>{title}</p>
-        <p
+        <Text className={`${getClassName("ReviewTokenTitle")}`}>{title}</Text>
+        <Text
           className={` ${getClassName("ReviewTokenAmount")}`}
-        >{`${amount} ${token.symbol}`}</p>
-        <p className={` ${getClassName("ReviewTokenUsd")}`}>
+        >{`${amount} ${token.symbol}`}</Text>
+        <Text className={` ${getClassName("ReviewTokenUsd")}`}>
           {usd || "-"}
-        </p>
+        </Text>
       </div>
       <Logo
         src={token.logo}

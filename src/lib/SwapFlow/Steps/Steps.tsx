@@ -3,6 +3,7 @@ import { SwapStep as SwapStepType } from "../../type";
 import { getClassName } from "../../util";
 import { Spinner } from "../../components/Spinner/Spinner";
 import './style.css'
+import { Text } from "src/lib/components/Text/Text";
 
 export const Steps = ({
   className = "",
@@ -40,7 +41,7 @@ export function SwapStep({
     <div className={`${getClassName('StepsStep')}`}>
       <SwapStepLogo step={step} loading={step.id === currentStep} active={active} />
       <div className={`${getClassName('StepsStepLeft')} ${active ? getClassName('StepsStepLeftActive') : ''}`}>
-        <p className={getClassName('SwapStepTitle')}>{step.title}</p>
+        <Text className={getClassName('SwapStepTitle')}>{step.title}</Text>
         {step.link && <StepLink link={step.link} active={!!active} />}
       </div>
       <SwapStepStatus step={step} completed={completed} active={active} />
@@ -128,9 +129,9 @@ const Countdown = ({ millis = 0 }: { millis?: number }) => {
   const seconds = secondsLeft % 60;
 
   return (
-    <p className={getClassName('StepsStepTimer')}> 
+    <Text className={getClassName('StepsStepTimer')}> 
       {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-    </p>
+    </Text>
   );
 };
 const StepLink = ({

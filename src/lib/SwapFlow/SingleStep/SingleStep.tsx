@@ -1,4 +1,5 @@
 import { getClassName } from "@utils";
+import { Text } from "src/lib/components/Text/Text";
 import { SwapStep } from "../../type";
 import { TradePreview } from "../TradePreview/TradePreview";
 import { TradeStepLayout } from "../TradeStepLayout/TradeStepLayout";
@@ -15,15 +16,10 @@ export function SingleStep({ step }: { step?: SwapStep }) {
           <TradePreview />
         </>
       }
-      footer={<BottomContent />}
     />
   );
 }
 
-const BottomContent = () => {
-  return <>Proceed in wallet</>;
-};
-
 const Title = ({ step }: { step?: SwapStep }) => {
-  return <p className={getClassName("SingleStepTitle")}>{step?.title}</p>;
+  return <Text className={getClassName("SingleStepTitle")}>{step?.title}</Text>;
 };

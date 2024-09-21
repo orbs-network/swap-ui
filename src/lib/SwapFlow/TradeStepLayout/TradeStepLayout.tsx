@@ -1,43 +1,74 @@
 import { getClassName } from "@utils";
 import { ReactNode } from "react";
+import { Text } from "src/lib/components/Text/Text";
 import { Spinner } from "../../components/Spinner/Spinner";
+import { useTranslation } from "../context";
 import "./style.css";
 
-
-type Status = 'success' | 'error' | 'loading';
+type Status = "success" | "error" | "loading";
 export function TradeStepLayout({
   status,
-  footer,
   className = "",
   body,
+  explorerUrl
 }: {
   status?: Status;
-  footer?: ReactNode;
   className?: string;
   body?: ReactNode;
+  explorerUrl?: string;
 }) {
   return (
     <div className={`${getClassName("TradeStepLayout")} ${className}`}>
       <Logo status={status} />
-      <div className={getClassName("TradeStepLayoutBody")}>
-        {body}
-      </div>
-      {footer && (
-        <div className={getClassName("TradeStepLayoutFooter")}>{footer}</div>
-      )}
+      <div className={getClassName("TradeStepLayoutBody")}>{body}</div>
+      <Footer status={status} explorerUrl={explorerUrl} />
     </div>
   );
 }
 
+const Footer = ({
+  status,
+  explorerUrl,
+}: {
+  status?: Status;
+  explorerUrl?: string;
+}) => {
+  const t = useTranslation()
+  const content =
+    status === "loading" ? (
+      <Text>{t.proceedInWallet}</Text>
+    ) : explorerUrl && status === "success" ? (
+      <TxHash explorerUrl={explorerUrl} />
+    ) : null;
+
+  return <div className={getClassName("TradeStepLayoutFooter")}>{content}</div>;
+};
+
+const TxHash = ({ explorerUrl }: { explorerUrl: string }) => {
+  const t = useTranslation()
+
+  return (
+    <a
+      target="_blank"
+      className={getClassName("TradeStepLayoutFooterHash")}
+      href={explorerUrl}
+    >
+     {t.viewOnExplorer}
+    </a>
+  );
+};
 
 function Success() {
   return (
-    <svg fill="currentColor" viewBox="0 0 16 16"   className={getClassName("TradeStepLayoutSuccessIcon")}>
+    <svg
+      fill="currentColor"
+      viewBox="0 0 16 16"
+      className={getClassName("TradeStepLayoutSuccessIcon")}
+    >
       <path d="M16 8A8 8 0 110 8a8 8 0 0116 0zm-3.97-3.03a.75.75 0 00-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 00-1.06 1.06L6.97 11.03a.75.75 0 001.079-.02l3.992-4.99a.75.75 0 00-.01-1.05z" />
     </svg>
   );
 }
-
 
 function Error() {
   return (
@@ -51,18 +82,14 @@ function Error() {
   );
 }
 
-
-
-const Logo = ({status}:{status?: Status}) => {
-
-  if(status === 'success') {
-    return <Success />
+const Logo = ({ status }: { status?: Status }) => {
+  if (status === "success") {
+    return <Success />;
   }
 
-  if(status === 'error') {
-    return <Error />
+  if (status === "error") {
+    return <Error />;
   }
 
-  return <Spinner size={60} borderWidth={5} />
-
-}
+  return <Spinner size={60} borderWidth={5} />;
+};

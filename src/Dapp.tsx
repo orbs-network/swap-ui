@@ -6,8 +6,8 @@ import "./styles.css";
 
 
 export const Dapp = () => {
-  const {swapStus, currentStep, start} = useFullFlow();
-  // const {swapStus, currentStep, steps} = useSingleStep();
+  // const {swapStus, currentStep, start} = useFullFlow();
+  const {swapStus, currentStep, steps, start} = useSingleStep();
   return (
     <>
 
@@ -58,44 +58,13 @@ const MainContent = ({currentStep, steps, inUsd, outUsd }:{currentStep?: number,
   );
 };
 
-// const useSingleStep = () => {
-//   const [swapStus, setSwapStus] = useState<SwapStatus | undefined>(undefined);
-//   useEffect(() => {
-//     setTimeout(() => {
-//       setSwapStus(SwapStatus.LOADING);
-//     }, 5_000);
-
-//     setTimeout(() => {
-//       setSwapStus(SwapStatus.SUCCESS);
-//     }, 10_000);
-//     // setTimeout(() => {
-//     //   setSwapStus(SwapStatus.FAILED);
-//     // }, 25_000);
-//   }, []);
-
-//   return {
-//     swapStus,
-//     currentStep: undefined,
-//     steps: [steps[2]]
-//   }
-// };
-
-const useFullFlow = () => {
+const useSingleStep = () => {
   const [swapStus, setSwapStus] = useState<SwapStatus | undefined>(undefined);
-  const [currentStep, setCurrentStep] = useState<number | undefined>(undefined);
  const start = () => {
   setSwapStus(SwapStatus.LOADING);
-  setCurrentStep(1);
-  setTimeout(() => {
-    setCurrentStep(prev => (prev || 0) + 1);
-  }, 5_000);
-  setTimeout(() => {
-    setCurrentStep(prev => (prev || 0) + 1);
-
-  }, 10_000);
   setTimeout(() => {
     setSwapStus(SwapStatus.SUCCESS);
-  }, 15_000);
+  }, 10_000);
   // setTimeout(() => {
   //   setSwapStus(SwapStatus.FAILED);
   // }, 25_000);
@@ -103,11 +72,40 @@ const useFullFlow = () => {
 
   return {
     swapStus,
-    currentStep,
-    steps: steps,
+    currentStep: undefined,
+    steps: [steps[2]],
     start
   }
 };
+
+// const useFullFlow = () => {
+//   const [swapStus, setSwapStus] = useState<SwapStatus | undefined>(undefined);
+//   const [currentStep, setCurrentStep] = useState<number | undefined>(undefined);
+//  const start = () => {
+//   setSwapStus(SwapStatus.LOADING);
+//   setCurrentStep(1);
+//   setTimeout(() => {
+//     setCurrentStep(prev => (prev || 0) + 1);
+//   }, 5_000);
+//   setTimeout(() => {
+//     setCurrentStep(prev => (prev || 0) + 1);
+
+//   }, 10_000);
+//   setTimeout(() => {
+//     setSwapStus(SwapStatus.SUCCESS);
+//   }, 15_000);
+//   // setTimeout(() => {
+//   //   setSwapStus(SwapStatus.FAILED);
+//   // }, 25_000);
+//  }
+
+//   return {
+//     swapStus,
+//     currentStep,
+//     steps: steps,
+//     start
+//   }
+// };
 
 const steps: SwapStep[] = [
   {

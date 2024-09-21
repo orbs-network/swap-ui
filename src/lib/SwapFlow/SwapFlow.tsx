@@ -33,6 +33,7 @@ const SwapFlow = ({
       outToken={rest.outToken}
       swapStatus={rest.swapStatus}
       txHash={rest.txHash}
+      translation={rest.translation}
     >
       <div
         className={` ${className} ${getClassName(

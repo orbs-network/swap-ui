@@ -20,7 +20,7 @@ export function Success({
           <TradePreview />
         </>
       }
-      footer={explorerUrl && <TxHash explorerUrl={explorerUrl} />}
+      explorerUrl={explorerUrl}
       status="success"
     />
   );
@@ -30,14 +30,3 @@ const Title = ({ children = "Swap success" }: { children?: ReactNode }) => {
   return <div className={getClassName("SuccessTitle")}>{children}</div>;
 };
 
-const TxHash = ({ explorerUrl }: { explorerUrl: string }) => {
-  return (
-    <a
-      target="_blank"
-      className={getClassName("SuccessExplorer")}
-      href={explorerUrl}
-    >
-      View on explorer
-    </a>
-  );
-};
