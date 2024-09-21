@@ -23,7 +23,7 @@ const Loader = () => {
   );
 };
 
-export const Review = ({
+export const Swap = ({
   steps,
   currentStep,
   fromTitle,
@@ -77,7 +77,6 @@ export const Review = ({
     return <SingleStep step={steps[0]} />
   }
 
- 
 
   return (
     <FlexColumn>

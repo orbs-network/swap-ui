@@ -1,16 +1,14 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { SwapFlow } from "./lib";
 import { Button } from "./lib/components/Button/Button";
 import { SwapStatus, SwapStep } from "./lib/type";
 import "./styles.css";
 
-
 export const Dapp = () => {
   // const {swapStus, currentStep, start} = useFullFlow();
-  const {swapStus, currentStep, steps, start} = useSingleStep();
+  const { swapStus, currentStep, steps, start } = useSingleStep();
   return (
     <>
-
       <div className="dapp">
         <SwapFlow
           inAmount="10"
@@ -23,33 +21,49 @@ export const Dapp = () => {
             symbol: "ETH",
             logo: "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/arbitrum/assets/0x912CE59144191C1204E64559FE8253a0e49E6548/logo.png",
           }}
-          mainContent={<MainContent inUsd="$10" outUsd="$10" currentStep={currentStep} steps={steps} />}
+          mainContent={
+            <MainContent
+              inUsd="$10"
+              outUsd="$10"
+              currentStep={currentStep}
+              steps={steps}
+            />
+          }
           failedContent={<FailedContent />}
           successContent={<SuccessContent />}
           swapStatus={swapStus}
         />
-        {!swapStus && <Button className="swap-button" onClick={start}>Swap</Button>}
+        {!swapStus && (
+          <Button className="swap-button" onClick={start}>
+            Swap
+          </Button>
+        )}
       </div>
     </>
   );
 };
 
 const SuccessContent = () => {
-  return (
-    <SwapFlow.Success
-      explorerUrl="/"
-      title={<p>Swap success!</p>}
-    />
-  );
+  return <SwapFlow.Success explorerUrl="/" title={<p>Swap success!</p>} />;
 };
 
 const FailedContent = () => {
   return <SwapFlow.Failed />;
 };
 
-const MainContent = ({currentStep, steps, inUsd, outUsd }:{currentStep?: number, steps?: SwapStep[], inUsd?: string, outUsd?: string}) => {
+const MainContent = ({
+  currentStep,
+  steps,
+  inUsd,
+  outUsd,
+}: {
+  currentStep?: number;
+  steps?: SwapStep[];
+  inUsd?: string;
+  outUsd?: string;
+}) => {
   return (
-    <SwapFlow.Review
+    <SwapFlow.Swap
       inUsd={inUsd}
       outUsd={outUsd}
       steps={steps}
@@ -60,22 +74,22 @@ const MainContent = ({currentStep, steps, inUsd, outUsd }:{currentStep?: number,
 
 const useSingleStep = () => {
   const [swapStus, setSwapStus] = useState<SwapStatus | undefined>(undefined);
- const start = () => {
-  setSwapStus(SwapStatus.LOADING);
-  setTimeout(() => {
-    setSwapStus(SwapStatus.SUCCESS);
-  }, 10_000);
-  // setTimeout(() => {
-  //   setSwapStus(SwapStatus.FAILED);
-  // }, 25_000);
- }
+  const start = () => {
+    setSwapStus(SwapStatus.LOADING);
+    setTimeout(() => {
+      setSwapStus(SwapStatus.SUCCESS);
+    }, 10_000);
+    // setTimeout(() => {
+    //   setSwapStus(SwapStatus.FAILED);
+    // }, 25_000);
+  };
 
   return {
     swapStus,
     currentStep: undefined,
     steps: [steps[2]],
-    start
-  }
+    start,
+  };
 };
 
 // const useFullFlow = () => {
