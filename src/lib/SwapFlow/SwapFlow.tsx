@@ -4,7 +4,7 @@ import { SwapConfirmationArgs, SwapStatus } from "../type";
 import { getClassName } from "../util";
 import { Failed } from "./Failed/Failed";
 import { Success } from "./Success/Success";
-import { Swap } from "./Swap/Swap";
+import { Main } from "./Main/Main";
 import { TradeStepLayout } from "./TradeStepLayout/TradeStepLayout";
 import './style.css';
 import { Steps } from "./Steps/Steps";
@@ -54,7 +54,7 @@ const SwapFlow = ({
 
 SwapFlow.Success = Success;
 SwapFlow.Failed = Failed;
-SwapFlow.Swap = Swap;
+SwapFlow.Main = Main;
 SwapFlow.StepLayout = TradeStepLayout; 
 SwapFlow.Steps = Steps;
 

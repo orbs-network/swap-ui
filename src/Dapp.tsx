@@ -27,6 +27,8 @@ export const Dapp = () => {
               outUsd="$10"
               currentStep={currentStep}
               steps={steps}
+              priceImpact="0.1%"
+            
             />
           }
           failedContent={<FailedContent />}
@@ -56,18 +58,21 @@ const MainContent = ({
   steps,
   inUsd,
   outUsd,
+  priceImpact
 }: {
   currentStep?: number;
   steps?: SwapStep[];
   inUsd?: string;
   outUsd?: string;
+  priceImpact?: string;
 }) => {
   return (
-    <SwapFlow.Swap
+    <SwapFlow.Main
       inUsd={inUsd}
       outUsd={outUsd}
       steps={steps}
       currentStep={currentStep}
+      priceImpact={priceImpact}
     />
   );
 };

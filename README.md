@@ -1,6 +1,6 @@
 # Orbs Swap UI Library
 
-This UI library is designed to help developers seamlessly integrate the Orbs Liquidity Hub with a clean and intuitive swap flow. It offers a customizable interface to handle swap steps, status updates, and user interactions in a decentralized application (dApp).
+This UI library is designed to help developers seamlessly integrate the Orbs Liquidity Hub and Twap with a clean and intuitive swap flow. It offers a customizable interface to handle swap steps, status updates, and user interactions in a decentralized application (dApp).
 
 ---
 
@@ -9,7 +9,7 @@ This UI library is designed to help developers seamlessly integrate the Orbs Liq
 - **Swap Flow UI**: A step-by-step user interface for performing swaps.
 - **Status Management**: Easily track the status of swaps (loading, success, failure).
 - **Customization**: Provide custom content for each step in the swap process.
-- **Simple Integration**: Designed to integrate effortlessly with the Orbs Liquidity Hub SDK.
+- **Simple Integration**: Designed to integrate effortlessly with the Orbs Liquidity Hub and Twap SDK.
 
 ---
 
