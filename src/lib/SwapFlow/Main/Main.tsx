@@ -30,6 +30,7 @@ export const Main = ({
   inUsd,
   outUsd,
   priceImpact,
+  showSingleStep = true,
 }: {
   steps?: SwapStep[];
   currentStep?: number;
@@ -38,6 +39,7 @@ export const Main = ({
   inUsd?: string | number;
   outUsd?: string | number;
   priceImpact?: string | number;
+  showSingleStep?: boolean
 }) => {
   const { swapStatus, outAmount, inAmount, inToken, outToken } =
     useSwapConfirmationContext();
@@ -62,15 +64,20 @@ export const Main = ({
     </>
   );
 
-  if (!steps) {
-    return <Loader />;
-  }
-
   if (!swapStatus) {
     return <FlexColumn>{swapDetails}</FlexColumn>;
   }
 
-  if (steps.length === 1) {
+  if (!steps) {
+    return (
+      <FlexColumn>
+        {swapDetails}
+        <Loader />
+      </FlexColumn>
+    );
+  }
+
+  if (showSingleStep && steps.length === 1) {
     return <SingleStep step={steps[0]} />;
   }
 
@@ -97,14 +104,13 @@ const TokenDisplay = ({
 }) => {
   if (!token) return null;
 
-
   return (
     <div className={`${getClassName("MainToken")}`}>
       <div className={`${getClassName("MainTokenLeft")}`}>
         <Text className={`${getClassName("MainTokenTitle")}`}>{title}</Text>
-        <Text
-          className={` ${getClassName("MainTokenAmount")}`}
-        >{`${amount && Number(amount) > 0 ? amount : ""} ${token.symbol}`}</Text>
+        <Text className={` ${getClassName("MainTokenAmount")}`}>{`${
+          amount && Number(amount) > 0 ? amount : ""
+        } ${token.symbol}`}</Text>
         {usd && (
           <Text className={` ${getClassName("MainTokenUsd")}`}>
             {usd} {priceImpact && <small>{`(${priceImpact})`}</small>}
