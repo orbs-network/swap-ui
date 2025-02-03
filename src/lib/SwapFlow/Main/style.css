@@ -1,69 +1,71 @@
+.orbs_Main-wrapper {
+  width: 100%;
+}
+
 .orbs_Main {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-  
-  .orbs_MainToken {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    gap: 8px;
-  }
-  
-  .orbs_MainTokenLeft {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
 
-  
-  .orbs_MainTokenLogo {
-    width: 36px;
-    height: 36px;
-  }
-  
-  .orbs_MainTokenUsd {
-    font-size: 14px;
-    opacity: 0.8;
-  }
+.orbs_MainToken {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
+}
 
-  .orbs_MainTokenUsd small {
-    font-size: 12px;
-    opacity: 0.6;
-  }
-  
-  .orbs_MainTokenAmount {
-    font-size: 26px;
-    font-weight: 500;
-  }
-  
-  .orbs_MainTokenTitle {
-    font-size: 14px;
-    opacity: 0.7;
-  }
-  
+.orbs_MainTokenLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
 
-  .orbs_MainContentLoader {
-   width: 100%;
-   display: flex;
-   gap: 15px;
-   align-items: center;
-   margin-top: 20px;
-  }
-  .orbs_MainContentRectengularLoader{
-    flex: 1;
-    height: 20px;
-    max-width: 250px;
-    border-radius: 20px;
-  }
+.orbs_MainTokenLogo {
+  width: 36px;
+  height: 36px;
+}
 
-  .orbs_MainContentCircleLoader {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-  }
+.orbs_MainTokenUsd {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.orbs_MainTokenUsd small {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.orbs_MainTokenAmount {
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.orbs_MainTokenTitle {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.orbs_MainContentLoader {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-top: 20px;
+}
+.orbs_MainContentRectengularLoader {
+  flex: 1;
+  height: 20px;
+  max-width: 250px;
+  border-radius: 20px;
+}
+
+.orbs_MainContentCircleLoader {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}

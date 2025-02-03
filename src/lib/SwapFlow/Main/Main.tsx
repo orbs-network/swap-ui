@@ -1,4 +1,5 @@
 import { getClassName } from "@utils";
+import { ReactNode } from "react";
 import { FlexColumn } from "src/lib/components/BaseStyles/BaseStyles";
 import { Text } from "src/lib/components/Text/Text";
 import { SwapStep, SwapConfirmationToken } from "src/lib/type";
@@ -31,6 +32,7 @@ export const Main = ({
   outUsd,
   priceImpact,
   showSingleStep = true,
+  bottomContent,
 }: {
   steps?: SwapStep[];
   currentStep?: number;
@@ -40,12 +42,13 @@ export const Main = ({
   outUsd?: string | number;
   priceImpact?: string | number;
   showSingleStep?: boolean
+  bottomContent?: ReactNode;
 }) => {
   const { swapStatus, outAmount, inAmount, inToken, outToken } =
     useSwapConfirmationContext();
 
   const swapDetails = (
-    <>
+    <div className={`${getClassName("Main-wrapper")}`}>
       <div className={`${getClassName("Main")}`}>
         <TokenDisplay
           title={fromTitle || "Swap from"}
@@ -61,7 +64,8 @@ export const Main = ({
           priceImpact={priceImpact}
         />
       </div>
-    </>
+      {bottomContent}
+    </div>
   );
 
   if (!swapStatus) {
@@ -89,7 +93,7 @@ export const Main = ({
   );
 };
 
-const TokenDisplay = ({
+export const TokenDisplay = ({
   amount,
   token,
   usd,
