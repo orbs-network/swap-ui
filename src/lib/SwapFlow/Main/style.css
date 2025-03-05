@@ -9,6 +9,7 @@
   gap: 28px;
 }
 
+
 .orbs_MainToken {
   display: flex;
   flex-direction: row;
@@ -33,6 +34,9 @@
 .orbs_MainTokenUsd {
   font-size: 14px;
   opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .orbs_MainTokenUsd small {

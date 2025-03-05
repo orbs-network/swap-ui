@@ -30,7 +30,6 @@ export const Main = ({
   toTitle,
   inUsd,
   outUsd,
-  priceImpact,
   showSingleStep = true,
   bottomContent,
 }: {
@@ -38,9 +37,8 @@ export const Main = ({
   currentStep?: number;
   fromTitle?: string;
   toTitle?: string;
-  inUsd?: string | number;
-  outUsd?: string | number;
-  priceImpact?: string | number;
+  inUsd?: ReactNode;
+  outUsd?: ReactNode;
   showSingleStep?: boolean
   bottomContent?: ReactNode;
 }) => {
@@ -61,7 +59,6 @@ export const Main = ({
           usd={outUsd}
           token={outToken}
           amount={outAmount}
-          priceImpact={priceImpact}
         />
       </div>
       {bottomContent}
@@ -98,13 +95,11 @@ export const TokenDisplay = ({
   token,
   usd,
   title,
-  priceImpact,
 }: {
   amount?: string;
   token?: SwapConfirmationToken;
-  usd?: string | number;
+  usd?: ReactNode;
   title: string;
-  priceImpact?: string | number;
 }) => {
   if (!token) return null;
 
@@ -116,9 +111,9 @@ export const TokenDisplay = ({
           amount && Number(amount) > 0 ? amount : ""
         } ${token.symbol}`}</Text>
         {usd && (
-          <Text className={` ${getClassName("MainTokenUsd")}`}>
-            {usd} {priceImpact && <small>{`(${priceImpact})`}</small>}
-          </Text>
+          <div className={` ${getClassName("MainTokenUsd")}`}>
+            {usd}
+          </div>
         )}
       </div>
       <Logo src={token.logo} className={` ${getClassName("MainTokenLogo")}`} />
