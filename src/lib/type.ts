@@ -7,29 +7,38 @@ export enum SwapStatus {
   FAILED = 3,
 }
 
-export interface SwapStep {
-  id: number,
-  title: ReactNode;
-  link?: { href: string; text: string };
-  icon?: ReactNode;
-  image?: string;
-  hidden?: boolean;
-  txHash?: string;
-  timeout?: number;
+export interface Step {
+  title: string;
+  explorerUrl?: string;
+  inTokenOnly?: boolean;
+  hideTokens?: boolean;
 }
 
-export interface SwapConfirmationArgs {
+export interface SwapFlowProps {
   inAmount?: string;
   outAmount?: string;
-  inToken?: SwapConfirmationToken;
-  outToken?: SwapConfirmationToken;
+  inToken?: Token;
+  className?: string;
+  outToken?: Token;
   swapStatus?: SwapStatus;
-  txHash?: string;
-  isUnwrapFlow?: boolean;
+  currentStep?: Step;
+  totalSteps?: number;
+  currentStepIndex?: number;
   translation?: {
     proceedInWallet?: string;
     viewOnExplorer?: string;
+    getHelp?: string;
+  }
+  components: {
+    SrcTokenLogo?: ReactNode;
+    DstTokenLogo?: ReactNode;
+    Loader?: ReactNode;
+    SuccessIcon?: ReactNode;  
+    FailedIcon?: ReactNode;
+    Success: ReactNode;
+    Failed: ReactNode;
+    Main: ReactNode;
   }
 }
 
-export type SwapConfirmationToken = {symbol?: string, logo?: string}
+export type Token = {symbol?: string, logoUrl?: string}

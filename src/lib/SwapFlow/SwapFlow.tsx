@@ -1,61 +1,41 @@
-import { Provider } from "./context";
-import { ReactNode } from "react";
-import { SwapConfirmationArgs, SwapStatus } from "../type";
+import { Provider, useMainContext } from "./context";
+import { SwapFlowProps, SwapStatus } from "../type";
 import { getClassName } from "../util";
 import { Failed } from "./Failed/Failed";
 import { Success } from "./Success/Success";
 import { Main } from "./Main/Main";
 import { TradeStepLayout } from "./TradeStepLayout/TradeStepLayout";
-import './style.css';
-import { Steps } from "./Steps/Steps";
+import "./style.css";
 
-interface Props extends SwapConfirmationArgs {
-  className?: string;
-  successContent: ReactNode;
-  failedContent: ReactNode;
-  mainContent: ReactNode;
-}
 
-const SwapFlow = ({
-  className = "",
-  successContent,
-  failedContent,
-  mainContent,
-  ...rest
-}: Props) => {
-  const { swapStatus } = rest;
-
+const SwapFlow = (props: SwapFlowProps) => {
   return (
     <Provider
-      inAmount={rest.inAmount}
-      outAmount={rest.outAmount}
-      inToken={rest.inToken}
-      outToken={rest.outToken}
-      swapStatus={rest.swapStatus}
-      txHash={rest.txHash}
-      translation={rest.translation}
+     {...props}
     >
-      <div
-        className={` ${className} ${getClassName(
-          "SwapFlow"
-        )}`}
-      >
-        <>
-          {swapStatus === SwapStatus.SUCCESS
-            ? successContent
-            : swapStatus === SwapStatus.FAILED
-            ? failedContent
-            : mainContent}
-        </>
-      </div>
+      <Controller />
     </Provider>
+  );
+};
+
+const Controller = () => {
+  const { swapStatus, components, className } = useMainContext();
+  return (
+    <div className={`${getClassName("SwapFlow")} ${className}`}>
+      {swapStatus === SwapStatus.SUCCESS ? (
+        components?.Success
+      ) : swapStatus === SwapStatus.FAILED ? (
+        components?.Failed
+      ) : (
+        components?.Main
+      )}
+    </div>
   );
 };
 
 SwapFlow.Success = Success;
 SwapFlow.Failed = Failed;
 SwapFlow.Main = Main;
-SwapFlow.StepLayout = TradeStepLayout; 
-SwapFlow.Steps = Steps;
+SwapFlow.StepLayout = TradeStepLayout;
 
 export { SwapFlow };

@@ -1,8 +1,9 @@
-import { useSwapConfirmationContext } from "../context";
-import { SwapConfirmationToken } from "../../type";
+import { useMainContext } from "../context";
+import { Token } from "../../type";
 import { getClassName } from "@utils";
 import './style.css'
 import { Text } from "src/lib/components/Text/Text";
+import { ReactNode } from "react";
 
 function IconArrowRightShort() {
   return (
@@ -19,22 +20,24 @@ function IconArrowRightShort() {
   );
 }
 
-export const TradePreview = () => {
-    const { inToken, outToken, inAmount, outAmount } = useSwapConfirmationContext();
+export const TradePreview = ({ inTokenOnly }: { inTokenOnly?: boolean }) => {
+    const { inToken, outToken, inAmount, outAmount, components } = useMainContext();
   
     return (
-      <div className={getClassName('TradepPreview')}>
-        <TokenAmount token={inToken} amount={inAmount} />
+      <div className={getClassName('TradePreview')}>
+        <TokenAmount token={inToken} amount={inAmount} Logo={components?.SrcTokenLogo} />
+       {!inTokenOnly &&  <>
         <IconArrowRightShort />
-        <TokenAmount token={outToken} amount={outAmount} />
+        <TokenAmount token={outToken} amount={outAmount} Logo={components?.DstTokenLogo} />
+        </>}
       </div>
     );
   };
   
-  const TokenAmount = ({ token, amount }: { token?: SwapConfirmationToken, amount?: string }) => {
+  const TokenAmount = ({ token, amount, Logo }: { token?: Token, amount?: string, Logo?: ReactNode }) => {
     return (
       <div className={getClassName('TradePreviewToken')}>
-        <img src={token?.logo} className={getClassName('TradepPreviewLogo')} alt={`${token?.symbol} logo`} />
+        {Logo || <img src={token?.logoUrl} className={getClassName('TradepPreviewLogo')} alt={`${token?.symbol} logo`} />}
         <Text>
           {amount} {token?.symbol}
         </Text>

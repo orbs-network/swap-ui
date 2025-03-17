@@ -1,37 +1,37 @@
 import { useState } from "react";
 import { SwapFlow } from "./lib";
 import { Button } from "./lib/components/Button/Button";
-import { SwapStatus, SwapStep } from "./lib/type";
+import { Step, SwapStatus } from "./lib/type";
 import "./styles.css";
 
 export const Dapp = () => {
   // const {swapStus, currentStep, start} = useFullFlow();
-  const { swapStus, currentStep, steps, start } = useSingleStep();
+  const { swapStus, currentStepIndex, stepsCount, start, currentStep } = useFullFlow();
   return (
     <>
       <div className="dapp">
         <SwapFlow
           inAmount="10"
           outAmount="10"
+          totalSteps={stepsCount}
+          currentStepIndex={currentStepIndex}
+          currentStep={currentStep}
           inToken={{
             symbol: "ETH",
-            logo: "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/arbitrum/assets/0x912CE59144191C1204E64559FE8253a0e49E6548/logo.png",
+            logoUrl: "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/arbitrum/assets/0x912CE59144191C1204E64559FE8253a0e49E6548/logo.png",
           }}
           outToken={{
             symbol: "ETH",
-            logo: "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/arbitrum/assets/0x912CE59144191C1204E64559FE8253a0e49E6548/logo.png",
+            logoUrl: "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/arbitrum/assets/0x912CE59144191C1204E64559FE8253a0e49E6548/logo.png",
           }}
-          mainContent={
-            <MainContent
+          components={{
+            Main: <MainContent
               inUsd="$10"
               outUsd="$10"
-              currentStep={currentStep}
-              steps={steps}
-            
-            />
-          }
-          failedContent={<FailedContent />}
-          successContent={<SuccessContent />}
+            />,
+            Failed: <FailedContent />,
+            Success: <SuccessContent />,
+          }}
           swapStatus={swapStus}
         />
         {!swapStus && (
@@ -45,21 +45,19 @@ export const Dapp = () => {
 };
 
 const SuccessContent = () => {
-  return <SwapFlow.Success explorerUrl="/" title={<p>Swap success!</p>} />;
+  return <SwapFlow.Success explorerUrl="/" title='Swap success!' />;
 };
 
 const FailedContent = () => {
-  return <SwapFlow.Failed />;
+  return <SwapFlow.Failed  link="/"/>;
 };
 
 const MainContent = ({
-  currentStep,
-  steps,
+
   inUsd,
   outUsd,
 }: {
-  currentStep?: number;
-  steps?: SwapStep[];
+
   inUsd?: string;
   outUsd?: string;
 }) => {
@@ -67,81 +65,67 @@ const MainContent = ({
     <SwapFlow.Main
       inUsd={inUsd}
       outUsd={outUsd}
-      steps={steps}
-      currentStep={currentStep}
+  
     />
   );
 };
 
-const useSingleStep = () => {
-  const [swapStus, setSwapStus] = useState<SwapStatus | undefined>(undefined);
-  const start = () => {
-    setSwapStus(SwapStatus.LOADING);
-    setTimeout(() => {
-      setSwapStus(SwapStatus.SUCCESS);
-    }, 10_000);
-    // setTimeout(() => {
-    //   setSwapStus(SwapStatus.FAILED);
-    // }, 25_000);
-  };
-
-  return {
-    swapStus,
-    currentStep: undefined,
-    steps: [steps[1]],
-    start,
-  };
-};
-
-// const useFullFlow = () => {
+// const useSingleStep = () => {
 //   const [swapStus, setSwapStus] = useState<SwapStatus | undefined>(undefined);
-//   const [currentStep, setCurrentStep] = useState<number | undefined>(undefined);
-//  const start = () => {
-//   setSwapStus(SwapStatus.LOADING);
-//   setCurrentStep(1);
-//   setTimeout(() => {
-//     setCurrentStep(prev => (prev || 0) + 1);
-//   }, 5_000);
-//   setTimeout(() => {
-//     setCurrentStep(prev => (prev || 0) + 1);
-
-//   }, 10_000);
-//   setTimeout(() => {
-//     setSwapStus(SwapStatus.SUCCESS);
-//   }, 15_000);
-//   // setTimeout(() => {
-//   //   setSwapStus(SwapStatus.FAILED);
-//   // }, 25_000);
-//  }
+//   const start = () => {
+//     setSwapStus(SwapStatus.LOADING);
+//     setTimeout(() => {
+//       setSwapStus(SwapStatus.SUCCESS);
+//     }, 10_000);
+//     // setTimeout(() => {
+//     //   setSwapStus(SwapStatus.FAILED);
+//     // }, 25_000);
+//   };
 
 //   return {
 //     swapStus,
-//     currentStep,
-//     steps: steps,
-//     start
-//   }
+//     currentStep: undefined,
+//     steps: [steps[1]],
+//     start,
+//   };
 // };
 
-const steps: SwapStep[] = [
+const useFullFlow = () => {
+  const [swapStus, setSwapStus] = useState<SwapStatus | undefined>(undefined);
+  const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
+ const start = () => {
+  setSwapStus(SwapStatus.LOADING);
+  setTimeout(() => {
+    setCurrentStepIndex(prev => (prev || 0) + 1);
+  }, 2_000);
+  setTimeout(() => {
+    setCurrentStepIndex(prev => (prev || 0) + 1);
+  }, 4_000);
+  setTimeout(() => {
+    setSwapStus(SwapStatus.SUCCESS);
+  }, 6_000);
+ }
+  return {
+    swapStus,
+    currentStepIndex,
+    stepsCount: steps.length,
+    start,
+    currentStep: steps[currentStepIndex],
+  }
+};
+
+const steps: Step[] = [
   {
-    id: 1,
     title: "Wrap ETH",
-    image:
-      "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/arbitrum/assets/0x912CE59144191C1204E64559FE8253a0e49E6548/logo.png",
+
   },
   {
-    id: 2,
     title: "Approve ETH",
-    image:
-      "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/arbitrum/assets/0x912CE59144191C1204E64559FE8253a0e49E6548/logo.png",
   },
   {
-    id: 3,
     title: "Confirm Swap",
-    timeout: 40_000,
-    image:
-      "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/arbitrum/assets/0x912CE59144191C1204E64559FE8253a0e49E6548/logo.png",
   },
+
 ];
 
 // function IconSwapFill() {

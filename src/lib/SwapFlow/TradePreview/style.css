@@ -1,4 +1,4 @@
-.orbs_TradepPreview {
+.orbs_TradePreview {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9,19 +9,26 @@
   .orbs_TradePreviewToken {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 
    max-width: calc(50% - 30px);
   }
   
   .orbs_TradePreviewToken p {
-    font-size: 14px;
-    white-space: nowrap; /* Prevent text from wrapping to the next line */
-    overflow: hidden;    /* Hide any text that overflows beyond the container's width */
-    text-overflow: ellipsis; 
-    flex: 1;
-    margin: 0;
-    padding: 0;
+    --token-font-size: 15px;
+    --token-white-space: nowrap;
+    --token-overflow: hidden;
+    --token-text-overflow: ellipsis;
+    --token-flex: 1;
+    --token-margin: 0;
+    --token-padding: 0;
+    
+    font-size: var(--token-font-size);
+    white-space: var(--token-white-space); /* Prevent text from wrapping to the next line */
+    overflow: var(--token-overflow);    /* Hide any text that overflows beyond the container's width */
+    text-overflow: var(--token-text-overflow); 
+    flex: var(--token-flex);
+    margin: var(--token-margin);
   }
 
   .orbs_TradepPreviewIcon {
@@ -30,8 +37,8 @@
   }
   
   .orbs_TradepPreviewLogo {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     overflow: hidden;
   }

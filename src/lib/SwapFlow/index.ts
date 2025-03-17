@@ -1,2 +1,2 @@
 export {SwapFlow} from './SwapFlow'
-export {TokenDisplay} from './Main/Main'
+export {TokenDisplay, TokensDisplay} from './Main/Main'

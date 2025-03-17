@@ -1,32 +1,22 @@
-import { ReactNode } from "react";
 import { getClassName } from "@utils";
 import { TradePreview } from "../TradePreview/TradePreview";
 import { TradeStepLayout } from "../TradeStepLayout/TradeStepLayout";
-import "./style.css";
 
 export function Success({
   title,
   explorerUrl,
+  hideTokens,
 }: {
-  title?: ReactNode;
+  title?: string;
   explorerUrl?: string;
+  hideTokens?: boolean;
 }) {
   return (
     <TradeStepLayout
+    title={title}
       className={getClassName("Success")}
-      body={
-        <>
-          <Title>{title}</Title>
-          <TradePreview />
-        </>
-      }
-      explorerUrl={explorerUrl}
-      status="success"
+      body={!hideTokens &&  <TradePreview />}
+      link={explorerUrl}
     />
   );
 }
-
-const Title = ({ children = "Swap success" }: { children?: ReactNode }) => {
-  return <div className={getClassName("SuccessTitle")}>{children}</div>;
-};
-
