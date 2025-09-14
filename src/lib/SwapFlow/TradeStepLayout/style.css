@@ -177,6 +177,7 @@
   line-height: var(--link-line-height);
   padding: var(--link-padding);
   transition: var(--link-transition);
+  cursor: pointer;
 }
 
 .orbs_TradeStepLayoutFooterLink:hover {

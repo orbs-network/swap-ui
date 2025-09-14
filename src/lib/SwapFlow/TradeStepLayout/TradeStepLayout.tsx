@@ -50,16 +50,23 @@ const Footer = ({ link }: { link?: string }) => {
 
 const Link = ({ link }: { link: string }) => {
   const t = useTranslation();
-  const { swapStatus } = useMainContext();
+  const { swapStatus, components } = useMainContext();
+
+  const text = swapStatus === SwapStatus.FAILED ? t.getHelp : t.viewOnExplorer;
+
+  if (components.Link) {
+    return <components.Link href={link}>{text}</components.Link>;
+  }
 
   return (
-    <a
-      target="_blank"
+    <div
       className={getClassName("TradeStepLayoutFooterLink")}
-      href={link}
+      onClick={() => {
+        window.open(link, "_blank");
+      }}
     >
-      {swapStatus === SwapStatus.FAILED ? t.getHelp : t.viewOnExplorer}
-    </a>
+      {text}
+    </div>
   );
 };
 

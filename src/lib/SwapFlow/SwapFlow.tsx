@@ -1,10 +1,7 @@
 import { Provider, useMainContext } from "./context";
-import { SwapFlowProps, SwapStatus } from "../type";
+import { SwapFlowProps } from "../type";
 import { getClassName } from "../util";
-import { Failed } from "./Failed/Failed";
-import { Success } from "./Success/Success";
 import { Main } from "./Main/Main";
-import { TradeStepLayout } from "./TradeStepLayout/TradeStepLayout";
 import "./style.css";
 
 
@@ -19,23 +16,15 @@ const SwapFlow = (props: SwapFlowProps) => {
 };
 
 const Controller = () => {
-  const { swapStatus, components, className } = useMainContext();
+  const { swapStatus, className = '' } = useMainContext();
+  const status = swapStatus ? 'active' : ''
   return (
-    <div className={`${getClassName("SwapFlow")} ${className}`}>
-      {swapStatus === SwapStatus.SUCCESS ? (
-        components?.Success
-      ) : swapStatus === SwapStatus.FAILED ? (
-        components?.Failed
-      ) : (
-        components?.Main
-      )}
+    <div className={`${getClassName("SwapFlow")} ${className}  ${status ? getClassName("SwapFlow") + '-' + status : ''}`}>
+      <Main />
     </div>
   );
 };
 
-SwapFlow.Success = Success;
-SwapFlow.Failed = Failed;
 SwapFlow.Main = Main;
-SwapFlow.StepLayout = TradeStepLayout;
 
 export { SwapFlow };

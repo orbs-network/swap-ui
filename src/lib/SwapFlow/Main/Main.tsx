@@ -1,165 +1,209 @@
 import { getClassName } from "@utils";
-import { ReactNode } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { FlexColumn } from "src/lib/components/BaseStyles/BaseStyles";
 import { Text } from "src/lib/components/Text/Text";
-import { Token } from "src/lib/type";
-import { SkeletonLoader } from "../../components/SkeletonLoader/SkeletonLoader";
 import { useMainContext } from "../context";
 import "./style.css";
-import { TradeStepLayout } from "../TradeStepLayout/TradeStepLayout";
-import { TradePreview } from "../TradePreview/TradePreview";
+import { SwapDetail, SwapStatus } from "src/lib/type";
+import CheckIcon from "src/lib/icons/check";
+import XIcon from "src/lib/icons/x";
 
-const Loader = () => {
+const DetailsList = ({
+  items,
+  className,
+}: {
+  items: SwapDetail[];
+  className?: string;
+}) => {
   return (
-    <div className={`${getClassName("MainContentLoader")}`}>
-      <SkeletonLoader
-        className={`${getClassName("MainContentCircleLoader")}`}
-      />
-      <SkeletonLoader
-        className={`${getClassName("MainContentRectengularLoader")}`}
-      />
+    <div className={`${getClassName("SwapDetailsList")} ${className}`}>
+      {items.map((item, index) => (
+        <div key={index} className={`${getClassName("SwapDetailsItem")}`}>
+          <div className={`${getClassName("SwapDetailsItemLabel")}`}>
+            {item.label}
+          </div>
+          <div className={`${getClassName("SwapDetailsItemValue")}`}>
+            {item.value}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
 
-export const Main = ({
-  fromTitle,
-  toTitle,
-  inUsd,
-  outUsd,
-}: {
-  fromTitle?: string;
-  toTitle?: string;
-  inUsd?: ReactNode;
-  outUsd?: ReactNode;
-}) => {
-  const {
-    swapStatus,
-    outAmount,
-    inAmount,
-    inToken,
-    outToken,
-    components,
-    totalSteps,
-  } = useMainContext();
+const SwapDetails = () => {
+  const { swapDetails, swapStatus, steps } = useMainContext();
+  const [isOpen, setIsOpen] = useState(false);
+  const bottomItemsRef = useRef<HTMLDivElement>(null);
 
-  const swapDetails = (
-    <TokensDisplay
-      fromTitle={fromTitle}
-      inUsd={inUsd}
-      inToken={inToken}
-      toTitle={toTitle}
-      outUsd={outUsd}
-      outToken={outToken}
-      inAmount={inAmount}
-      outAmount={outAmount}
-      SrcTokenLogo={components.SrcTokenLogo}
-      DstTokenLogo={components.DstTokenLogo}
-    />
+  if (swapStatus || steps?.length === 1) return null;
+  return (
+    <div className={`${getClassName("SwapDetails")}`}>
+      <div
+        className={`${getClassName("SwapDetailsToggle")}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <div className={`${getClassName("SwapDetailsToggleTrigger")}`}>
+          {isOpen ? "Show less" : "Show more"}
+        </div>
+      </div>
+      <DetailsList
+        items={swapDetails.slice(0, 2)}
+        className={`${getClassName("SwapDetailsTopItems")}`}
+      />
+      <div
+        style={{
+          height: isOpen ? bottomItemsRef.current?.clientHeight : 0,
+          overflow: "hidden",
+          transition: "height 0.2s ease-in-out",
+        }}
+      >
+        <DetailsList
+          items={swapDetails.slice(2)}
+          className={`${getClassName("SwapDetailsBottomItems")}`}
+        />
+      </div>
+
+      <div
+        className={`${getClassName("SwapDetailsBottomItemsRef")}`}
+        ref={bottomItemsRef}
+      >
+        <DetailsList
+          items={swapDetails.slice(2)}
+          className={`${getClassName("SwapDetailsBottomItems")}`}
+        />
+      </div>
+    </div>
   );
+};
 
-  if (!swapStatus) {
-    return <FlexColumn>{swapDetails}</FlexColumn>;
-  }
+const Steps = () => {
+  const { steps, swapStatus, stepIndex = 0, components } = useMainContext();
+  if (!swapStatus) return null;
 
-  if (!totalSteps) {
-    return (
-      <FlexColumn>
-        {swapDetails}
-        <Loader />
-      </FlexColumn>
-    );
-  }
+  const SuccessIcon = components?.SuccessIcon || <CheckIcon />;
+  const FailedIcon = components?.FailedIcon || <XIcon />;
 
-  return <SwapStep />;
+  return (
+    <FlexColumn className={`${getClassName("Steps")}`}>
+      {steps?.map((step, index) => {
+        const isActive = stepIndex >= index;
+        const stepPassed = stepIndex > index;
+        const isLast = index === steps?.length - 1;
+        const showSuccessIcon =
+          (isLast && swapStatus === SwapStatus.SUCCESS) || stepPassed;
+        const showFailedIcon =
+          stepIndex === index && swapStatus === SwapStatus.FAILED;
+        const showLoader = stepIndex === index && swapStatus === SwapStatus.LOADING;
+
+        return (
+          <div
+            key={index}
+            className={`${getClassName("Step")} ${
+              isActive ? getClassName("StepActive") : ""
+            }`}
+          >
+            <div className={`${getClassName("StepLogo")}`}>
+             {showLoader && <div className="pulse-border" />}
+              <div className={`${getClassName("StepLogoInner")}`}>
+                {step.logo}
+              </div>
+            </div>  
+
+            <div className={`${getClassName("StepContent")}`}>
+              <div className={`${getClassName("StepTitle")}`}>{step.title}</div>
+            {step.description &&   <div className={`${getClassName("StepDescription")}`}>
+                {step.description}
+              </div>}
+            </div>
+            {(showSuccessIcon || showFailedIcon) && (
+              <div className={`${getClassName("StepIcon")}`}>
+                {showFailedIcon ? FailedIcon : SuccessIcon}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </FlexColumn>
+  );
+};
+
+export const Main = () => {
+  return (
+    <FlexColumn>
+      <TokensDisplay />
+      <SwapDetails />
+      <Steps />
+    </FlexColumn>
+  );
 };
 
 export const TokenDisplay = ({
   amount,
-  token,
+  tokenSymbol,
+  tokenLogo,
   usd,
   title,
   Logo: CustomLogo,
 }: {
   amount?: string;
-  token?: Token;
+  tokenSymbol?: string;
+  tokenLogo?: string;
   usd?: ReactNode;
-  title: string;
+  title: ReactNode;
   Logo?: ReactNode;
 }) => {
-
   return (
     <div className={`${getClassName("MainToken")}`}>
       <div className={`${getClassName("MainTokenLeft")}`}>
-        <Text className={`${getClassName("MainTokenTitle")}`}>{title}</Text>
+        <div className={`${getClassName("MainTokenTitle")}`}>{title}</div>
         <Text className={` ${getClassName("MainTokenAmount")}`}>{`${
-          amount && Number(amount) > 0 ? amount : ""
-        } ${token?.symbol || ''}`}</Text>
+          amount && amount.toString() != "0" ? amount : ""
+        } ${tokenSymbol || ""}`}</Text>
         {usd && <div className={` ${getClassName("MainTokenUsd")}`}>{usd}</div>}
       </div>
       <div className={` ${getClassName("MainTokenLogo")}`}>
-        {CustomLogo || token?.logoUrl ?   <img src={token?.logoUrl} alt={'Token logo'} /> : null}
+        {CustomLogo ? (
+          CustomLogo
+        ) : tokenLogo ? (
+          <img src={tokenLogo} alt={"Token logo"} />
+        ) : null}
       </div>
     </div>
   );
 };
 
-export function SwapStep() {
-  const { currentStep } = useMainContext();
-
-  if (!currentStep) return null;
-
-  return (
-    <TradeStepLayout
-      link={currentStep.explorerUrl}
-      title={currentStep.title}
-      body={
-        currentStep.hideTokens ? undefined : (
-          <TradePreview inTokenOnly={currentStep?.inTokenOnly} />
-        )
-      }
-    />
-  );
-}
-
-export const TokensDisplay = ({
-  fromTitle,
-  inUsd,
-  inToken,
-  toTitle,
-  outUsd,
-  outToken,
-  inAmount,
-  outAmount,
-  SrcTokenLogo,
-  DstTokenLogo,
-}: {
-  fromTitle?: string;
-  inUsd?: ReactNode;
-  inToken?: Token;
-  toTitle?: string;
-  outUsd?: ReactNode;
-  outToken?: Token;
-  inAmount?: string;
-  outAmount?: string;
-  SrcTokenLogo?: ReactNode;
-  DstTokenLogo?: ReactNode;
-}) => {
+export const TokensDisplay = () => {
+  const {
+    inTokenSymbol,
+    inTokenLogo,
+    outTokenSymbol,
+    outTokenLogo,
+    inAmount,
+    outAmount,
+    inUsd,
+    outUsd,
+    components,
+    fromTitle,
+    toTitle,
+  } = useMainContext();
   return (
     <div className={`${getClassName("Main")}`}>
       <TokenDisplay
         title={fromTitle || "Swap from"}
         usd={inUsd}
-        token={inToken}
+        tokenSymbol={inTokenSymbol}
+        tokenLogo={inTokenLogo}
         amount={inAmount}
-        Logo={SrcTokenLogo}
+        Logo={components?.SrcTokenLogo}
       />
       <TokenDisplay
         title={toTitle || "Swap to"}
         usd={outUsd}
-        token={outToken}
+        tokenSymbol={outTokenSymbol}
+        tokenLogo={outTokenLogo}
         amount={outAmount}
-        Logo={DstTokenLogo}
+        Logo={components?.DstTokenLogo}
       />
     </div>
   );

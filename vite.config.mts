@@ -7,7 +7,6 @@ import path from "path";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   css: {
     modules: {
@@ -27,7 +26,8 @@ export default defineConfig({
       name: "main",
     },
     rollupOptions: {
-      external: ["react", "react-dom"],
+      // 👇 externalize React runtime completely
+      external: ["react", "react-dom", "react/jsx-runtime"],
       input: path.resolve(__dirname, "src/lib/index.ts"),
       output: {
         globals: {
@@ -48,17 +48,12 @@ export default defineConfig({
       include: ["src/lib/**/*.*"],
     }),
     nodePolyfills({
-      // To exclude specific polyfills, add them to this list.
-      exclude: [
-        "fs", // Excludes the polyfill for `fs` and `node:fs`.
-      ],
-      // Whether to polyfill specific globals.
+      exclude: ["fs"],
       globals: {
-        Buffer: true, // can also be 'build', 'dev', or false
+        Buffer: true,
         global: true,
         process: true,
       },
-      // Whether to polyfill `node:` protocol imports.
       protocolImports: true,
     }),
   ],

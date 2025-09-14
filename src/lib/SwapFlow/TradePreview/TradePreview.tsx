@@ -20,12 +20,12 @@ function IconArrowRightShort() {
   );
 }
 
-export const TradePreview = ({ inTokenOnly }: { inTokenOnly?: boolean }) => {
+export const TradePreview = ({ inTokenOnly, customToken }: { inTokenOnly?: boolean, customToken?: Token }) => {
     const { inToken, outToken, inAmount, outAmount, components } = useMainContext();
   
     return (
       <div className={getClassName('TradePreview')}>
-        <TokenAmount token={inToken} amount={inAmount} Logo={components?.SrcTokenLogo} />
+        <TokenAmount token={customToken || inToken} amount={inAmount} Logo={components?.SrcTokenLogo} />
        {!inTokenOnly &&  <>
         <IconArrowRightShort />
         <TokenAmount token={outToken} amount={outAmount} Logo={components?.DstTokenLogo} />
