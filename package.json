@@ -1,6 +1,6 @@
 {
   "name": "@orbs-network/swap-ui",
-  "version": "0.0.61",
+  "version": "0.0.62",
   "main": "dist/main.es.js",
   "module": "dist/main.es.js",
   "types": "dist/types/index.d.ts",
