@@ -4,11 +4,13 @@ import { TradeStepLayout } from "../TradeStepLayout/TradeStepLayout";
 
 export function Success({
   title,
-  explorerUrl,
+  footerLink,
+  footerText,
   hideTokens,
 }: {
   title?: string;
-  explorerUrl?: string;
+  footerLink?: string;
+  footerText?: string;
   hideTokens?: boolean;
 }) {
   return (
@@ -16,7 +18,8 @@ export function Success({
     title={title}
       className={getClassName("Success")}
       body={!hideTokens &&  <TradePreview />}
-      link={explorerUrl}
+      footerLink={footerLink}
+      footerText={footerText}
     />
   );
 }

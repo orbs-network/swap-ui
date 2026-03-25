@@ -23,23 +23,18 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/lib/index.ts"),
-      fileName: (format) => `main.${format}.js`,
-      name: "main",
+      formats: ["es"],        // ONLY ESM
+      fileName: () => `main.es.js`
     },
     rollupOptions: {
-      external: ["react", "react-dom"],
-      input: path.resolve(__dirname, "src/lib/index.ts"),
-      output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-        },
-      },
+      external: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
     },
   },
   plugins: [
     svgr(),
-    react(),
+    react({
+      jsxRuntime: "automatic",
+    }),
     tsconfigPaths(),
     cssInjectedByJsPlugin(),
     dts({

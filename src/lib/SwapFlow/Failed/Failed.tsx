@@ -5,14 +5,17 @@ import "./style.css";
 
 export const Failed = ({
   error,
-  link,
+  footerLink,
+  footerText,
 }: {
   error?: ReactNode;
-  link?: string;
+  footerLink?: string;
+  footerText?: string;
 }) => {
   return (
     <TradeStepLayout
-      link={link}
+      footerLink={footerLink}
+      footerText={footerText}
       body={
         error || (
           <p className={getClassName("FailedContentMsg")}>

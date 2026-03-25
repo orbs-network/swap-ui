@@ -2,20 +2,24 @@ import { getClassName } from "@utils";
 import { ReactNode } from "react";
 import { Text } from "src/lib/components/Text/Text";
 import { Spinner } from "../../components/Spinner/Spinner";
-import { useMainContext, useTranslation } from "../context";
+import { useMainContext } from "../context";
 import "./style.css";
 import { SwapStatus } from "src/lib/type";
 
 export function TradeStepLayout({
   className = "",
   body,
-  link,
+  footerLink,
+  footerText,
   title,
+  children,
 }: {
   className?: string;
   body?: ReactNode;
-  link?: string;
+  footerLink?: string;
+  footerText?: ReactNode;
   title?: string;
+  children?: ReactNode;
 }) {
   return (
     <div className={`${getClassName("TradeStepLayout")} ${className}`}>
@@ -28,29 +32,31 @@ export function TradeStepLayout({
       {body && (
         <div className={getClassName("TradeStepLayoutBody")}>{body}</div>
       )}
-      <Footer link={link} />
+      <Footer link={footerLink} text={footerText} />
+      {children}
     </div>
   );
 }
 
-const Footer = ({ link }: { link?: string }) => {
-  const t = useTranslation();
+const Footer = ({ link, text }: { link?: string; text?: ReactNode }) => {
   const { swapStatus } = useMainContext();
+
+  if(!link && !text) return null;
+
   return (
     <div className={getClassName("TradeStepLayoutFooter")}>
       <Indicator />
       {link ? (
-        <Link link={link} />
+        <Link link={link} text={text} />
       ) : swapStatus === SwapStatus.FAILED ? undefined : (
-        <Text>{t.proceedInWallet}</Text>
+        <Text>{text}</Text>
       )}
     </div>
   );
 };
 
-const Link = ({ link }: { link: string }) => {
-  const t = useTranslation();
-  const { swapStatus } = useMainContext();
+const Link = ({ link, text }: { link: string; text?: ReactNode }) => {
+
 
   return (
     <a
@@ -58,7 +64,7 @@ const Link = ({ link }: { link: string }) => {
       className={getClassName("TradeStepLayoutFooterLink")}
       href={link}
     >
-      {swapStatus === SwapStatus.FAILED ? t.getHelp : t.viewOnExplorer}
+      {text}
     </a>
   );
 };

@@ -9,7 +9,8 @@ export enum SwapStatus {
 
 export interface Step {
   title: string;
-  explorerUrl?: string;
+  footerLink?: string;
+  footerText?: string;
   inTokenOnly?: boolean;
   hideTokens?: boolean;
 }

@@ -97,9 +97,9 @@ export const TokenDisplay = ({
         } ${token?.symbol || ''}`}</Text>
         {usd && <div className={` ${getClassName("MainTokenUsd")}`}>{usd}</div>}
       </div>
-      <div className={` ${getClassName("MainTokenLogo")}`}>
-        {CustomLogo || token?.logoUrl ?   <img src={token?.logoUrl} alt={'Token logo'} /> : null}
-      </div>
+     {CustomLogo ? CustomLogo :  <div className={` ${getClassName("MainTokenLogo")}`}>
+        {token?.logoUrl ?   <img src={token?.logoUrl} alt={'Token logo'} /> : null}
+      </div>}
     </div>
   );
 };
@@ -111,7 +111,8 @@ export function SwapStep() {
 
   return (
     <TradeStepLayout
-      link={currentStep.explorerUrl}
+      footerLink={currentStep.footerLink}
+      footerText={currentStep.footerText}
       title={currentStep.title}
       body={
         currentStep.hideTokens ? undefined : (

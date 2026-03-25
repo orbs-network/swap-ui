@@ -24,8 +24,6 @@ export const useMainContext = () =>
   export const useTranslation = () => {
     const {translation}   = useMainContext()
     return {
-      proceedInWallet: translation?.proceedInWallet || 'Proceed in wallet',
-      viewOnExplorer: translation?.viewOnExplorer || 'View on explorer',
       getHelp: translation?.getHelp || 'Get help',
     }
 

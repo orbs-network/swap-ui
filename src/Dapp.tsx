@@ -45,11 +45,11 @@ export const Dapp = () => {
 };
 
 const SuccessContent = () => {
-  return <SwapFlow.Success explorerUrl="/" title='Swap success!' />;
+  return <SwapFlow.Success footerLink="/" title='Swap success!' />;
 };
 
 const FailedContent = () => {
-  return <SwapFlow.Failed  link="/"/>;
+  return <SwapFlow.Failed  footerLink="/"/>;
 };
 
 const MainContent = ({
