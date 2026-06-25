@@ -9,17 +9,21 @@ export function Button({
   onClick,
   isLoading,
   disabled,
+  type = "button",
 }: {
   children: ReactNode;
   className?: string;
   onClick: () => void;
   isLoading?: boolean;
   disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }) {
 
   return (
     <button
-      disabled={disabled}
+      type={type}
+      disabled={disabled || isLoading}
+      aria-busy={isLoading || undefined}
       onClick={onClick}
       className={`${getClassName('Button')} ${className}`}
     >

@@ -7,12 +7,25 @@ import { Main } from "./Main/Main";
 import { TradeStepLayout } from "./TradeStepLayout/TradeStepLayout";
 import "./style.css";
 
+const SwapFlow = ({
+  components,
+  mainContent,
+  failedContent,
+  successContent,
+  ...rest
+}: SwapFlowProps) => {
+  const value = {
+    ...rest,
+    components: {
+      ...components,
+      Main: mainContent ?? components?.Main ?? <Main />,
+      Failed: failedContent ?? components?.Failed ?? <Failed />,
+      Success: successContent ?? components?.Success ?? <Success />,
+    },
+  };
 
-const SwapFlow = (props: SwapFlowProps) => {
   return (
-    <Provider
-     {...props}
-    >
+    <Provider value={value}>
       <Controller />
     </Provider>
   );
@@ -20,14 +33,18 @@ const SwapFlow = (props: SwapFlowProps) => {
 
 const Controller = () => {
   const { swapStatus, components, className } = useMainContext();
+  const rootClassName = [getClassName("SwapFlow"), className]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div className={`${getClassName("SwapFlow")} ${className}`}>
+    <div className={rootClassName}>
       {swapStatus === SwapStatus.SUCCESS ? (
-        components?.Success
+        components.Success
       ) : swapStatus === SwapStatus.FAILED ? (
-        components?.Failed
+        components.Failed
       ) : (
-        components?.Main
+        components.Main
       )}
     </div>
   );

@@ -1,13 +1,15 @@
 import { getClassName } from "@utils";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { FlexColumn } from "src/lib/components/BaseStyles/BaseStyles";
 import { Text } from "src/lib/components/Text/Text";
-import { Token } from "src/lib/type";
+import type { Token } from "src/lib/type";
 import { SkeletonLoader } from "../../components/SkeletonLoader/SkeletonLoader";
-import { useMainContext } from "../context";
-import "./style.css";
+import { useMainContext, useTranslation } from "../context";
 import { TradeStepLayout } from "../TradeStepLayout/TradeStepLayout";
 import { TradePreview } from "../TradePreview/TradePreview";
+import { TokenLogo } from "../TokenLogo/TokenLogo";
+import { getTokenAmountLabel } from "../utils";
+import "./style.css";
 
 const Loader = () => {
   return (
@@ -16,7 +18,10 @@ const Loader = () => {
         className={`${getClassName("MainContentCircleLoader")}`}
       />
       <SkeletonLoader
-        className={`${getClassName("MainContentRectengularLoader")}`}
+        className={[
+          getClassName("MainContentRectangularLoader"),
+          getClassName("MainContentRectengularLoader"),
+        ].join(" ")}
       />
     </div>
   );
@@ -41,6 +46,7 @@ export const Main = ({
     outToken,
     components,
     totalSteps,
+    currentStep,
   } = useMainContext();
 
   const swapDetails = (
@@ -62,7 +68,7 @@ export const Main = ({
     return <FlexColumn>{swapDetails}</FlexColumn>;
   }
 
-  if (!totalSteps) {
+  if (!totalSteps || !currentStep) {
     return (
       <FlexColumn>
         {swapDetails}
@@ -87,32 +93,39 @@ export const TokenDisplay = ({
   title: string;
   Logo?: ReactNode;
 }) => {
+  const amountLabel = getTokenAmountLabel(amount, token);
 
   return (
     <div className={`${getClassName("MainToken")}`}>
       <div className={`${getClassName("MainTokenLeft")}`}>
         <Text className={`${getClassName("MainTokenTitle")}`}>{title}</Text>
-        <Text className={` ${getClassName("MainTokenAmount")}`}>{`${
-          amount && Number(amount) > 0 ? amount : ""
-        } ${token?.symbol || ''}`}</Text>
-        {usd && <div className={` ${getClassName("MainTokenUsd")}`}>{usd}</div>}
+        <Text className={getClassName("MainTokenAmount")}>{amountLabel}</Text>
+        {usd && <div className={getClassName("MainTokenUsd")}>{usd}</div>}
       </div>
-     {CustomLogo ? CustomLogo :  <div className={` ${getClassName("MainTokenLogo")}`}>
-        {token?.logoUrl ?   <img src={token?.logoUrl} alt={'Token logo'} /> : null}
-      </div>}
+      {CustomLogo || (
+        <TokenLogo
+          token={token}
+          size={40}
+          className={getClassName("MainTokenLogo")}
+        />
+      )}
     </div>
   );
 };
 
 export function SwapStep() {
   const { currentStep } = useMainContext();
+  const { proceedInWallet, getHelp } = useTranslation();
 
   if (!currentStep) return null;
 
   return (
     <TradeStepLayout
       footerLink={currentStep.footerLink}
-      footerText={currentStep.footerText}
+      footerText={
+        currentStep.footerText ??
+        (currentStep.footerLink ? getHelp : proceedInWallet)
+      }
       title={currentStep.title}
       body={
         currentStep.hideTokens ? undefined : (

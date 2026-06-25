@@ -1,10 +1,13 @@
 import { getClassName } from '@utils'
-import React from 'react'
+import type { HTMLAttributes, ReactNode } from 'react'
 import './style.css'
 
-export function Text({ children, className = '' }: { children: React.ReactNode, className?: string }) {
-  return (
-    <p className={`${className} ${getClassName('Text')}`}>{children}</p>
-  )
+interface TextProps extends HTMLAttributes<HTMLParagraphElement> {
+  children: ReactNode;
 }
 
+export function Text({ children, className = '', ...rest }: TextProps) {
+  return (
+    <p {...rest} className={`${className} ${getClassName('Text')}`}>{children}</p>
+  )
+}

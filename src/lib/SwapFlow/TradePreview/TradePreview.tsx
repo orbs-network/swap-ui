@@ -1,16 +1,18 @@
 import { useMainContext } from "../context";
-import { Token } from "../../type";
+import type { Token } from "../../type";
 import { getClassName } from "@utils";
-import './style.css'
 import { Text } from "src/lib/components/Text/Text";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
+import { TokenLogo } from "../TokenLogo/TokenLogo";
+import { getTokenAmountLabel } from "../utils";
+import "./style.css";
 
 function IconArrowRightShort() {
   return (
     <svg
       fill="currentColor"
       viewBox="0 0 16 16"
-      className={getClassName('TradepPreviewIcon')}
+      className={getClassName("TradepPreviewIcon")}
     >
       <path
         fillRule="evenodd"
@@ -21,27 +23,52 @@ function IconArrowRightShort() {
 }
 
 export const TradePreview = ({ inTokenOnly }: { inTokenOnly?: boolean }) => {
-    const { inToken, outToken, inAmount, outAmount, components } = useMainContext();
-  
-    return (
-      <div className={getClassName('TradePreview')}>
-        <TokenAmount token={inToken} amount={inAmount} Logo={components?.SrcTokenLogo} />
-       {!inTokenOnly &&  <>
-        <IconArrowRightShort />
-        <TokenAmount token={outToken} amount={outAmount} Logo={components?.DstTokenLogo} />
-        </>}
-      </div>
-    );
-  };
-  
-  const TokenAmount = ({ token, amount, Logo }: { token?: Token, amount?: string, Logo?: ReactNode }) => {
-    return (
-      <div className={getClassName('TradePreviewToken')}>
-        {Logo || <img src={token?.logoUrl} className={getClassName('TradepPreviewLogo')} alt={`${token?.symbol} logo`} />}
-        <Text>
-          {amount} {token?.symbol}
-        </Text>
-      </div>
-    );
-  };
-  
+  const { inToken, outToken, inAmount, outAmount, components } = useMainContext();
+  const className = [
+    getClassName("TradePreview"),
+    inTokenOnly && getClassName("TradePreviewSingleToken"),
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <div className={className}>
+      <TokenAmount token={inToken} amount={inAmount} Logo={components.SrcTokenLogo} />
+      {!inTokenOnly && (
+        <>
+          <IconArrowRightShort />
+          <TokenAmount
+            token={outToken}
+            amount={outAmount}
+            Logo={components.DstTokenLogo}
+          />
+        </>
+      )}
+    </div>
+  );
+};
+
+const TokenAmount = ({
+  token,
+  amount,
+  Logo,
+}: {
+  token?: Token;
+  amount?: string;
+  Logo?: ReactNode;
+}) => {
+  const label = getTokenAmountLabel(amount, token);
+
+  return (
+    <div className={getClassName("TradePreviewToken")}>
+      {Logo || (
+        <TokenLogo
+          token={token}
+          size={24}
+          className={getClassName("TradepPreviewLogo")}
+        />
+      )}
+      <Text title={label}>{label}</Text>
+    </div>
+  );
+};

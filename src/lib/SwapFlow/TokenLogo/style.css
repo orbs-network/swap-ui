@@ -1,0 +1,23 @@
+.orbs_TokenLogo {
+  width: var(--token-logo-size, 24px);
+  height: var(--token-logo-size, 24px);
+  flex: 0 0 var(--token-logo-size, 24px);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.orbs_TokenLogoImage {
+  display: block;
+  object-fit: cover;
+}
+
+.orbs_TokenLogoFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--token-logo-fallback-bg, #f1f5f9);
+  color: var(--token-logo-fallback-color, #475569);
+  font-size: calc(var(--token-logo-size, 24px) * 0.42);
+  font-weight: 700;
+  line-height: 1;
+}

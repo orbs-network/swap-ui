@@ -1,5 +1,4 @@
-
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export enum SwapStatus {
   LOADING = 1,
@@ -10,9 +9,26 @@ export enum SwapStatus {
 export interface Step {
   title: string;
   footerLink?: string;
-  footerText?: string;
+  footerText?: ReactNode;
   inTokenOnly?: boolean;
   hideTokens?: boolean;
+}
+
+export interface SwapFlowTranslation {
+  proceedInWallet?: string;
+  viewOnExplorer?: string;
+  getHelp?: string;
+}
+
+export interface SwapFlowComponents {
+  SrcTokenLogo?: ReactNode;
+  DstTokenLogo?: ReactNode;
+  Loader?: ReactNode;
+  SuccessIcon?: ReactNode;
+  FailedIcon?: ReactNode;
+  Success?: ReactNode;
+  Failed?: ReactNode;
+  Main?: ReactNode;
 }
 
 export interface SwapFlowProps {
@@ -25,21 +41,11 @@ export interface SwapFlowProps {
   currentStep?: Step;
   totalSteps?: number;
   currentStepIndex?: number;
-  translation?: {
-    proceedInWallet?: string;
-    viewOnExplorer?: string;
-    getHelp?: string;
-  }
-  components: {
-    SrcTokenLogo?: ReactNode;
-    DstTokenLogo?: ReactNode;
-    Loader?: ReactNode;
-    SuccessIcon?: ReactNode;  
-    FailedIcon?: ReactNode;
-    Success: ReactNode;
-    Failed: ReactNode;
-    Main: ReactNode;
-  }
+  translation?: SwapFlowTranslation;
+  mainContent?: ReactNode;
+  failedContent?: ReactNode;
+  successContent?: ReactNode;
+  components?: SwapFlowComponents;
 }
 
-export type Token = {symbol?: string, logoUrl?: string}
+export type Token = { symbol?: string; logoUrl?: string; logo?: string };

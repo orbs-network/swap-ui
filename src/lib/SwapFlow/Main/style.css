@@ -23,6 +23,15 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.orbs_MainTokenAmount {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .orbs_MainTokenUsd {
@@ -50,6 +59,13 @@
   border-radius: 20px;
 }
 
+.orbs_MainContentRectangularLoader {
+  flex: 1;
+  height: 20px;
+  max-width: 250px;
+  border-radius: 20px;
+}
+
 .orbs_MainContentCircleLoader {
   width: 30px;
   height: 30px;
@@ -58,14 +74,5 @@
 
 
 .orbs_MainTokenLogo {
-  --width: 40px;
-  --height: 40px;
-  width: var(--width);
-  height: var(--height);
-}
-
-.orbs_MainTokenLogo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  flex: 0 0 auto;
 }

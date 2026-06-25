@@ -1,10 +1,10 @@
 import { getClassName } from "@utils";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Text } from "src/lib/components/Text/Text";
+import { SwapStatus } from "src/lib/type";
 import { Spinner } from "../../components/Spinner/Spinner";
 import { useMainContext } from "../context";
 import "./style.css";
-import { SwapStatus } from "src/lib/type";
 
 export function TradeStepLayout({
   className = "",
@@ -40,14 +40,16 @@ export function TradeStepLayout({
 
 const Footer = ({ link, text }: { link?: string; text?: ReactNode }) => {
   const { swapStatus } = useMainContext();
+  const hasText =
+    text !== undefined && text !== null && text !== false && text !== "";
 
-  if(!link && !text) return null;
+  if (!link && !hasText) return null;
 
   return (
     <div className={getClassName("TradeStepLayoutFooter")}>
       <Indicator />
       {link ? (
-        <Link link={link} text={text} />
+        <Link link={link} text={hasText ? text : link} />
       ) : swapStatus === SwapStatus.FAILED ? undefined : (
         <Text>{text}</Text>
       )}
@@ -56,11 +58,10 @@ const Footer = ({ link, text }: { link?: string; text?: ReactNode }) => {
 };
 
 const Link = ({ link, text }: { link: string; text?: ReactNode }) => {
-
-
   return (
     <a
       target="_blank"
+      rel="noreferrer"
       className={getClassName("TradeStepLayoutFooterLink")}
       href={link}
     >
@@ -145,15 +146,19 @@ const Loader = () => {
 
 export const Indicator = () => {
   const { totalSteps, currentStepIndex = 0, swapStatus } = useMainContext();
+  const stepCount = totalSteps || 0;
 
   if (swapStatus !== SwapStatus.LOADING) return null;
-  if (totalSteps === 1) return null;
+  if (stepCount <= 1) return null;
+
+  const stepIndex = Math.min(Math.max(currentStepIndex, 0), stepCount - 1);
+
   return (
     <div className={getClassName("StepIndicator")}>
       <div
         style={{
-          width: `${100 / (totalSteps || 0)}%`,
-          left: `${(currentStepIndex * 100) / (totalSteps || 0)}%`,
+          width: `${100 / stepCount}%`,
+          left: `${(stepIndex * 100) / stepCount}%`,
         }}
         className={getClassName("StepIndicatorLine")}
       />

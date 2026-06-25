@@ -1,45 +1,49 @@
 .orbs_TradePreview {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-  }
-  
-  .orbs_TradePreviewToken {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
 
-   max-width: calc(50% - 30px);
-  }
-  
-  .orbs_TradePreviewToken p {
-    --token-font-size: 15px;
-    --token-white-space: nowrap;
-    --token-overflow: hidden;
-    --token-text-overflow: ellipsis;
-    --token-flex: 1;
-    --token-margin: 0;
-    --token-padding: 0;
-    
-    font-size: var(--token-font-size);
-    white-space: var(--token-white-space); /* Prevent text from wrapping to the next line */
-    overflow: var(--token-overflow);    /* Hide any text that overflows beyond the container's width */
-    text-overflow: var(--token-text-overflow); 
-    flex: var(--token-flex);
-    margin: var(--token-margin);
-  }
+.orbs_TradePreviewToken {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: calc(50% - 30px);
+}
 
-  .orbs_TradepPreviewIcon {
-    width: 22px;
-    height: 22px;
-  }
-  
-  .orbs_TradepPreviewLogo {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  
+.orbs_TradePreviewSingleToken .orbs_TradePreviewToken {
+  max-width: 100%;
+}
+
+.orbs_TradePreviewToken p {
+  --token-font-size: 15px;
+  --token-white-space: nowrap;
+  --token-overflow: hidden;
+  --token-text-overflow: ellipsis;
+  --token-flex: 1;
+  --token-margin: 0;
+  --token-padding: 0;
+
+  font-size: var(--token-font-size);
+  white-space: var(--token-white-space);
+  overflow: var(--token-overflow);
+  text-overflow: var(--token-text-overflow);
+  flex: var(--token-flex);
+  margin: var(--token-margin);
+}
+
+.orbs_TradepPreviewIcon {
+  width: 22px;
+  height: 22px;
+}
+
+.orbs_TradepPreviewLogo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex: 0 0 24px;
+}
